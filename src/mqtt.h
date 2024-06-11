@@ -37,26 +37,28 @@ PubSubClient client(espClient); // Setup MQTT client
 
 // Handle incomming messages from the broker
 void clientCallback(char* topic, byte* payload, unsigned int length) {
-  String response;
+  //String response;
 
   for (int i = 0; i < length; i++) {
-    response += (char)payload[i];
+    in_txt += (char)payload[i];
+    //response += (char)payload[i];
   }
-  // Serial.print("Message arrived [");
+  //Serial.printf("Message arrived [");
   // Serial.print(TOPIC.c_str());
   // Serial.print("] ");
-  // Serial.println(response);
-  in_txt = response;
+  
+  //in_txt = response;
   callback = true;
+  //Serial.println(in_txt);
 
   // Obtén la longitud de la cadena original
-  size_t len = response.length();
+  //size_t len = response.length();
 
   // Reserva memoria para una cadena de caracteres (char[]) con el tamaño adecuado
-  char *response_char = (char *)malloc(len + 1);  // +1 para el carácter nulo '\0'
+  //char *response_char = (char *)malloc(len + 1);  // +1 para el carácter nulo '\0'
 
   // Copia la cadena original en la cadena convertida
-  response.toCharArray(response_char, len + 1);
+  //response.toCharArray(response_char, len + 1);
 
   //return response;
 }
@@ -69,6 +71,9 @@ void reconnectMQTTClient() {
       Serial.println(BROKER.c_str());
       // Topic(s) subscription
       client.subscribe(TOPIC.c_str());
+      Serial.print("Subscribed to Topic: ");
+      Serial.println(TOPIC.c_str());
+      client.setCallback(clientCallback);
     }
     else {
       Serial.print("Retying in 5 seconds - failed, rc=");
@@ -80,7 +85,7 @@ void reconnectMQTTClient() {
 
 void createMQTTClient() {
   client.setServer(BROKER.c_str(), 1883);
-  client.setCallback(clientCallback);
+  //client.setCallback(clientCallback);
   reconnectMQTTClient();
 }
 
