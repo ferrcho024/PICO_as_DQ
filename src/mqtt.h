@@ -5,27 +5,12 @@
 #include <WiFi.h>
 #include <PubSubClient.h>
 
-/*
-
-#include <stdio.h>
-#include <string.h>
-#include <MQTTClient.h>
-
-// MQTT settings
-#define ID "1"
-#define BROKER "192.168.179.18"  // Dirección del broker MQTT
-#define CLIENT_NAME "pico_"+ID
-#define TOPIC "80"  // Tópico al que te suscribirás
-
-*/
-
 // MQTT settings
 const String ID = "1";
 const String BROKER = "192.168.1.104";
 const String CLIENT_NAME = "pico_"+ID;
 const String TOPIC = "80";
 
-//const char* in_txt[256];
 String in_txt;
 bool callback = false;
 
@@ -88,42 +73,3 @@ void createMQTTClient() {
   //client.setCallback(clientCallback);
   reconnectMQTTClient();
 }
-
-/*
-
-MQTTClient client;
-MQTTClient_connectOptions conn_opts = MQTTClient_connectOptions_initializer;
-
-void messageArrived(void* context, char* topicName, int topicLen, MQTTClient_message* message) {
-    //printf("Mensaje recibido en el tópico: %s\n", topicName);
-    //printf("Contenido del mensaje: %.*s\n", message->payloadlen, (char*)message->payload);
-
-    // Supongamos que el mensaje es un texto simple y queremos guardarlo en una variable
-    char receivedMessage[256];  // Se supone que el mensaje no excede los 256 caracteres
-    snprintf(receivedMessage, sizeof(receivedMessage), "%.*s", message->payloadlen, (char*)message->payload);
-    //printf("Mensaje recibido guardado en la variable: %s\n", receivedMessage);
-
-    strncpy(in_txt, message, sizeof(in_txt)); // Copia el mensaje recibido en la variable in_txt
-    callback = true;
-
-    MQTTClient_freeMessage(&message);
-    MQTTClient_free(topicName);
-}
-
-void connectMQTTBroker() {
-    MQTTClient_create(&client, BROKER, CLIENT_NAME, MQTTCLIENT_PERSISTENCE_NONE, NULL);
-    conn_opts.keepAliveInterval = 20;
-    conn_opts.cleansession = 1;
-
-    MQTTClient_setCallbacks(client, NULL, NULL, messageArrived, NULL);
-
-    if (MQTTClient_connect(client, &conn_opts) == MQTTCLIENT_SUCCESS) {
-            printf("connected to Broker: %s\n", BROKER);
-            MQTTClient_subscribe(client, TOPIC, 0);
-            return;
-    } else {
-            printf("Retying in 5 seconds - failed\n");
-            sleep(5);  // Espera 5 segundos antes de intentar nuevamente
-    }
-}
-*/

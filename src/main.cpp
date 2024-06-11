@@ -57,8 +57,9 @@ void task1() {
   float queue_df[60];
   float queue_nova[60];
 
-  char c = getchar();
+  
   /*
+  char c = getchar();
   if (pico_mount((c | ' ') == 'y') != LFS_ERR_OK) {
         Serial.printf("Error mounting FS\n");
     }else{
@@ -78,10 +79,7 @@ void task1() {
     }
 
     if (callback){
-      ledBlink(1);
-
-      //Serial.println("Entró al callback");
-        
+      ledBlink(1);   
       
       //   Encontrar la posición de la primera coma
       int comaPos1 = in_txt.indexOf(',');
@@ -112,13 +110,9 @@ void task1() {
       value_to_list(queue_df, df_value.c_str(), cont);
       value_to_list(queue_nova, nova_value.c_str(), cont);
          
-
       callback = false;
       cont++;
-    } else{
-          //client.loop();
-          //reconnectMQTTClient();
-    }
+    } 
   }
 }
 
